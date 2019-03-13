@@ -2,7 +2,7 @@ import { ComponentID } from "../component";
 
 export interface Template {
   page: Page;
-  items: Item[];
+  items: Item<any>[];
 }
 
 export interface Page {
@@ -16,10 +16,10 @@ export interface Margin {
   bottom: number;
 }
 
-export interface Item {
+export interface Item<T> {
   id: ItemID;
   component: ComponentID;
-  value: string;
+  value: T;
 }
 
 export type ItemID = string;

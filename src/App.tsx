@@ -33,6 +33,10 @@ const items = [
   },
   {
     id: randID(),
+    component: ComponentID.Table
+  },
+  {
+    id: randID(),
     component: ComponentID.Heading
   },
   {
@@ -74,14 +78,17 @@ export default class App extends React.Component<any, State> {
     });
   };
 
-  addItem = (component: Component, after?: Item): Item => {
-    const item: Item = {
+  addItem = <T extends {}>(
+    component: Component<T>,
+    after?: Item<any>
+  ): Item<T> => {
+    const item: Item<T> = {
       id: randID(),
       component: component.id,
       value: componentsByID[component.id].defaultValue
     };
 
-    const items: Item[] = [];
+    const items: Item<any>[] = [];
     this.state.template.items.forEach(i => {
       items.push(i);
       if (after && i.id === after.id) {
@@ -102,7 +109,7 @@ export default class App extends React.Component<any, State> {
     return item;
   };
 
-  removeItem = (item: Item) => {
+  removeItem = <T extends {}>(item: Item<T>) => {
     const items = this.state.template.items.filter(i => item.id !== i.id);
     this.setState({
       template: {

@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 
 interface Props {
-  item?: Item;
+  item?: Item<any>;
 }
 
 export const Settings: React.SFC<Props> = ({ item }) => {

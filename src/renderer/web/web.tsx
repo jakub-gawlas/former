@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { Template, Item } from "../../template";
+import { Template, Item, ItemID } from "../../template";
 
 import { componentsByID } from "../../component";
 
@@ -15,14 +15,14 @@ const styles: Record<string, CSSProperties> = {
   }
 };
 
-interface Props {
+interface Props<T> {
   template: Template;
-  activeItem?: Item;
-  onChangeItemValue: (id: string, value: string) => void;
-  onClickItem: (item: Item) => void;
+  activeItem?: Item<T>;
+  onChangeItemValue: (id: ItemID, value: T) => void;
+  onClickItem: (item: Item<T>) => void;
 }
 
-export const Web: React.SFC<Props> = ({
+export const Web: React.SFC<Props<any>> = ({
   template,
   activeItem,
   onChangeItemValue,

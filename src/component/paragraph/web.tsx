@@ -1,5 +1,6 @@
 import React, { SFC } from "react";
-import { RenderProps } from "../types";
+import { WebProps } from "../types";
+import { Value } from "./types";
 
 import { View, Text } from "../base";
 
@@ -8,14 +9,13 @@ const styles = {
     fontWeight: 400,
     fontSize: "12pt",
     textIndent: "30pt",
-    outline: "none",
     textAlign: "justify",
     paddingTop: 5,
     paddingBottom: 5
   }
 };
 
-export const ParagraphWeb: SFC<RenderProps> = ({
+export const ParagraphWeb: SFC<WebProps<Value>> = ({
   value,
   onChange,
   onClick

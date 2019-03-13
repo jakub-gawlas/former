@@ -29,8 +29,8 @@ const styles: Record<string, CSSProperties> = {
 interface Props {
   template: Template;
   setTemplateItemValue: (id: string, value: string) => void;
-  addItem: (component: Component, after?: Item) => Item;
-  removeItem: (item: Item) => void;
+  addItem: (component: Component<any>, after?: Item<any>) => Item<any>;
+  removeItem: (item: Item<any>) => void;
 }
 
 export const Builder: React.SFC<Props> = ({
@@ -45,14 +45,14 @@ export const Builder: React.SFC<Props> = ({
     ? template.items.find(item => item.id === activeItemID)
     : undefined;
 
-  const onClickItem = (item: Item) => {
+  const onClickItem = (item: Item<any>) => {
     if (activeItem && activeItem.value === "") {
       removeItem(activeItem);
     }
     setActiveItemID(item.id);
   };
 
-  const onClickAddItem = (component: Component) => () => {
+  const onClickAddItem = (component: Component<any>) => () => {
     const item = addItem(component, activeItem);
     setActiveItemID(item.id);
   };

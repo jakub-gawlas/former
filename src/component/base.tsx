@@ -11,7 +11,7 @@ export const Text: React.SFC<TextProps> = ({ value, style, onChange }) => {
   return (
     <Editable
       html={value}
-      style={{ ...style, width: "100%" }}
+      style={{ width: "100%", outline: "none", ...style }}
       onChange={onChange ? e => onChange(e.target.value) : undefined}
     />
   );
@@ -26,7 +26,7 @@ interface ViewProps {
   onClick?: () => void;
 }
 
-export const View = ({ style, children, onClick }) => {
+export const View: React.SFC<ViewProps> = ({ style, children, onClick }) => {
   return (
     <div
       onClick={onClick}

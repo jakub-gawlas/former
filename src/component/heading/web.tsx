@@ -1,5 +1,6 @@
 import React from "react";
-import { RenderProps } from "../types";
+import { WebProps } from "../types";
+import { Value } from "./types";
 
 import { View, Text } from "../base";
 
@@ -10,12 +11,11 @@ const styles = {
   },
   text: {
     fontWeight: 600,
-    fontSize: "22pt",
-    outline: "none"
+    fontSize: "22pt"
   }
 };
 
-export const HeadingWeb: React.SFC<RenderProps> = ({
+export const HeadingWeb: React.SFC<WebProps<Value>> = ({
   value,
   onChange,
   onClick

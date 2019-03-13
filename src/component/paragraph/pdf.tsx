@@ -1,5 +1,6 @@
 import React, { SFC } from "react";
-import { RenderProps } from "../types";
+import { PDFProps } from "../types";
+import { Value } from "./types";
 
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const ParagraphPDF: SFC<RenderProps> = ({ value }) => (
+export const ParagraphPDF: SFC<PDFProps<Value>> = ({ value }) => (
   <View>
     <Text style={styles.paragraph}>{value}</Text>
   </View>
