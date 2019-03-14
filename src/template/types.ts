@@ -31,3 +31,7 @@ export interface Item<T> {
 }
 
 export type ItemID = string;
+
+export function randID() {
+  return (Math.random() * 1e7).toFixed().toString();
+}
