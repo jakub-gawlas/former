@@ -30,10 +30,12 @@ const items = [
     id: randID(),
     component: ComponentID.Paragraph
   }
-].map(component => ({
-  ...component,
-  value: componentsByID[component.component].defaultValue
-}));
+].map(item => {
+  return {
+    ...item,
+    value: componentsByID[item.component].defaultValue()
+  };
+});
 
 export const initialState: Template = {
   page: {

@@ -8,7 +8,7 @@ import TitleIcon from "@material-ui/icons/Title";
 
 export const Heading: Component<Value> = {
   id: ComponentID.Heading,
-  defaultValue: "Title",
+  defaultValue: () => "Title",
   name: "Title",
   Icon: TitleIcon,
   Web: HeadingWeb,

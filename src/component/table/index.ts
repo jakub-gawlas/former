@@ -8,7 +8,7 @@ import TableIcon from "@material-ui/icons/TableChart";
 
 export const Table: Component<Value> = {
   id: ComponentID.Table,
-  defaultValue: {
+  defaultValue: () => ({
     columns: [{ title: "Foo" }, { title: "Bar" }, { title: "Baz" }],
     rows: [
       {
@@ -30,7 +30,7 @@ export const Table: Component<Value> = {
       },
       { cells: [{ value: "foo" }, { value: "bar bar" }, { value: "baz baz" }] }
     ]
-  },
+  }),
   name: "Table",
   Icon: TableIcon,
   Web: TableWeb,

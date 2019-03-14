@@ -48,7 +48,7 @@ export const createActions = (dispatch: Dispatch<ValidAction>) => {
       const item: Item<any> = {
         id: randID(),
         component: component.id,
-        value: componentsByID[component.id].defaultValue
+        value: componentsByID[component.id].defaultValue()
       };
       const action: ValidAction = {
         type: Type.AddTemplateItem,

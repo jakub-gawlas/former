@@ -8,7 +8,7 @@ import NotesIcon from "@material-ui/icons/Notes";
 
 export const Paragraph: Component<Value> = {
   id: ComponentID.Paragraph,
-  defaultValue:
+  defaultValue: () =>
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris id elit hendrerit nibh consectetur luctus. Duis vitae maximus massa.",
   name: "Paragraph",
   Icon: NotesIcon,

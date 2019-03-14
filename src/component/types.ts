@@ -5,7 +5,7 @@ import { Item } from "../template";
 export interface Component<T> {
   id: ComponentID;
   name: string;
-  defaultValue: T;
+  defaultValue: () => T;
   Icon: ComponentType<SvgIconProps>;
   Web: SFC<WebProps<any>>;
   PDF: SFC<PDFProps<any>>;
