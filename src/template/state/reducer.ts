@@ -6,7 +6,7 @@ type ReduceFunction = (payload: any) => Template;
 
 export const createReducer = () => (
   state: Template,
-  action: action.Action<any>
+  action: action.ValidAction
 ): Template => {
   const reduceFunctions: Record<Type, ReduceFunction> = {
     [Type.SetPageSizeWidth]: (payload: action.SetMeasurementPayload) => {

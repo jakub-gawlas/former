@@ -3,10 +3,21 @@ import { Component, componentsByID } from "../../component";
 import { Item, ItemID, randID } from "../types";
 import { Type } from "./type";
 
-export interface Action<T> {
-  type: Type;
-  payload: T;
+export interface Action<T, P> {
+  type: T;
+  payload: P;
 }
+
+export type ValidAction =
+  | Action<Type.SetPageSizeWidth, SetMeasurementPayload>
+  | Action<Type.SetPageSizeHeight, SetMeasurementPayload>
+  | Action<Type.SetPageMarginLeft, SetMeasurementPayload>
+  | Action<Type.SetPageMarginTop, SetMeasurementPayload>
+  | Action<Type.SetPageMarginRight, SetMeasurementPayload>
+  | Action<Type.SetPageMarginBottom, SetMeasurementPayload>
+  | Action<Type.AddTemplateItem, AddTemplateItemPayload>
+  | Action<Type.RemoveTemplateItem, RemoveTemplateItemPayload>
+  | Action<Type.SetTemplateItemValue, SetTemplateItemValuePayload>;
 
 /** Payload types */
 export type SetMeasurementPayload = number;
@@ -24,19 +35,7 @@ export interface SetTemplateItemValuePayload {
 }
 
 /** Actions */
-const measurementActionCreator = (dispatch: Dispatch<Action<any>>) => (
-  type: Type
-) => {
-  return (value: number) => {
-    const action: Action<SetMeasurementPayload> = {
-      type: type,
-      payload: value
-    };
-    dispatch(action);
-  };
-};
-
-export const createActions = (dispatch: Dispatch<Action<any>>) => {
+export const createActions = (dispatch: Dispatch<ValidAction>) => {
   const measurementAction = measurementActionCreator(dispatch);
   return {
     setPageSizeWidth: measurementAction(Type.SetPageSizeWidth),
@@ -51,7 +50,7 @@ export const createActions = (dispatch: Dispatch<Action<any>>) => {
         component: component.id,
         value: componentsByID[component.id].defaultValue
       };
-      const action: Action<AddTemplateItemPayload> = {
+      const action: ValidAction = {
         type: Type.AddTemplateItem,
         payload: { item, after }
       };
@@ -59,14 +58,14 @@ export const createActions = (dispatch: Dispatch<Action<any>>) => {
       return item;
     },
     removeTemplateItem: (item: Item<any>) => {
-      const action: Action<RemoveTemplateItemPayload> = {
+      const action: ValidAction = {
         type: Type.RemoveTemplateItem,
         payload: item
       };
       dispatch(action);
     },
     setTemplateItemValue: (item: Item<any>, value: any) => {
-      const action: Action<SetTemplateItemValuePayload> = {
+      const action: ValidAction = {
         type: Type.SetTemplateItemValue,
         payload: {
           id: item.id,
@@ -77,3 +76,17 @@ export const createActions = (dispatch: Dispatch<Action<any>>) => {
     }
   };
 };
+
+function measurementActionCreator(
+  dispatch: Dispatch<Action<any, SetMeasurementPayload>>
+) {
+  return (type: Type) => {
+    return (value: number) => {
+      const action: Action<any, SetMeasurementPayload> = {
+        type,
+        payload: value
+      };
+      dispatch(action);
+    };
+  };
+}

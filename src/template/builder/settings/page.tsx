@@ -1,11 +1,9 @@
 import React from "react";
-import { Page } from "../../types";
 
 import { context } from "../../../context";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import { MeasurementField } from "./components/measurement";
 
 export const PageSettings: React.SFC<{}> = () => {
@@ -34,7 +32,14 @@ export const PageSettings: React.SFC<{}> = () => {
               value={page.size.height}
               onChange={actions.setPageSizeHeight}
             />
-            <Typography variant="overline" color="textSecondary" align="center">
+            <Typography
+              variant="overline"
+              color="textSecondary"
+              align="center"
+              style={{
+                marginTop: "1.5rem"
+              }}
+            >
               MARGIN
             </Typography>
             <MeasurementField
