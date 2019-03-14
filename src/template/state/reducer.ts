@@ -56,15 +56,6 @@ export const createReducer = () => (
       const items = state.items.filter(i => payload.id !== i.id);
       return { ...state, items };
     },
-    [Type.RemoveTemplateItem]: (payload: action.RemoveTemplateItemPayload) => {
-      const items = state.items.map(item => {
-        if (item.id === payload.id) {
-          item.value = payload.value;
-        }
-        return item;
-      });
-      return { ...state, items };
-    },
     [Type.SetTemplateItemValue]: (
       payload: action.SetTemplateItemValuePayload
     ) => {
