@@ -6,10 +6,18 @@ export interface Template {
 }
 
 export interface Page {
+  size: Size;
   margin: Margin;
 }
 
+export interface Size {
+  // values in mm
+  width: number;
+  height: number;
+}
+
 export interface Margin {
+  // values in mm
   left: number;
   top: number;
   right: number;

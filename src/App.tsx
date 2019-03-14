@@ -1,6 +1,6 @@
-import React from "react";
-import { Template, Item } from "./template";
-import { Component, ComponentID, componentsByID } from "./component";
+import React, { useReducer, SFC } from "react";
+import { createReducer, initialState, createActions } from "./template";
+import { context } from "./context";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { PDFViewer } from "@react-pdf/renderer";
@@ -10,117 +10,20 @@ import { PDF } from "./renderer/pdf";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 
-interface State {
-  template: Template;
-}
+export const App: SFC<{}> = () => {
+  const reducer = createReducer();
+  const [template, dispatch] = useReducer(reducer, initialState);
+  const actions = createActions(dispatch);
 
-const items = [
-  {
-    id: randID(),
-    component: ComponentID.Heading
-  },
-  {
-    id: randID(),
-    component: ComponentID.Paragraph
-  },
-  {
-    id: randID(),
-    component: ComponentID.Heading
-  },
-  {
-    id: randID(),
-    component: ComponentID.Paragraph
-  },
-  {
-    id: randID(),
-    component: ComponentID.Table
-  },
-  {
-    id: randID(),
-    component: ComponentID.Heading
-  },
-  {
-    id: randID(),
-    component: ComponentID.Paragraph
-  }
-].map(component => ({
-  ...component,
-  value: componentsByID[component.component].defaultValue
-}));
-
-export default class App extends React.Component<any, State> {
-  state: State = {
-    template: {
-      page: {
-        margin: {
-          left: 15,
-          top: 25,
-          right: 15,
-          bottom: 25
+  return (
+    <context.Provider
+      value={{
+        template: {
+          state: template,
+          actions
         }
-      },
-      items
-    }
-  };
-
-  setTemplateItemValue = (id: string, value: string) => {
-    const items = this.state.template.items.map(item => {
-      if (item.id === id) {
-        item.value = value;
-      }
-      return item;
-    });
-    this.setState({
-      template: {
-        ...this.state.template,
-        items
-      }
-    });
-  };
-
-  addItem = <T extends {}>(
-    component: Component<T>,
-    after?: Item<any>
-  ): Item<T> => {
-    const item: Item<T> = {
-      id: randID(),
-      component: component.id,
-      value: componentsByID[component.id].defaultValue
-    };
-
-    const items: Item<any>[] = [];
-    this.state.template.items.forEach(i => {
-      items.push(i);
-      if (after && i.id === after.id) {
-        items.push(item);
-      }
-    });
-    if (!after) {
-      items.push(item);
-    }
-
-    this.setState({
-      template: {
-        ...this.state.template,
-        items
-      }
-    });
-
-    return item;
-  };
-
-  removeItem = <T extends {}>(item: Item<T>) => {
-    const items = this.state.template.items.filter(i => item.id !== i.id);
-    this.setState({
-      template: {
-        ...this.state.template,
-        items
-      }
-    });
-  };
-
-  render() {
-    return (
+      }}
+    >
       <Router>
         <React.Fragment>
           <Route
@@ -137,10 +40,10 @@ export default class App extends React.Component<any, State> {
                   }}
                 >
                   <Builder
-                    template={this.state.template}
-                    setTemplateItemValue={this.setTemplateItemValue}
-                    addItem={this.addItem}
-                    removeItem={this.removeItem}
+                    template={template}
+                    setTemplateItemValue={actions.setTemplateItemValue}
+                    addItem={actions.addTemplateItem}
+                    removeItem={actions.removeTemplateItem}
                   />
                 </Grid>
               </React.Fragment>
@@ -156,16 +59,12 @@ export default class App extends React.Component<any, State> {
                   height: "100vh"
                 }}
               >
-                <PDF template={this.state.template} />
+                <PDF template={template} />
               </PDFViewer>
             )}
           />
         </React.Fragment>
       </Router>
-    );
-  }
-}
-
-function randID() {
-  return (Math.random() * 1e7).toFixed().toString();
-}
+    </context.Provider>
+  );
+};

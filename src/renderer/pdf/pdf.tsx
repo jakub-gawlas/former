@@ -17,9 +17,23 @@ interface Props {
 }
 
 export const PDF: React.SFC<Props> = ({ template }) => {
+  const { page } = template;
+  const pageStyle = {
+    ...styles.page,
+    paddingLeft: mm(page.margin.left),
+    paddingTop: mm(page.margin.top),
+    paddingRight: mm(page.margin.right),
+    paddingBottom: mm(page.margin.bottom)
+  };
   return (
     <Document>
-      <Page style={styles.page}>
+      <Page
+        size={{
+          width: mmToPix(page.size.width),
+          height: mmToPix(page.size.height)
+        }}
+        style={pageStyle}
+      >
         {template.items.map(item => {
           const component = componentsByID[item.component];
           if (!component.Web) {
@@ -31,3 +45,13 @@ export const PDF: React.SFC<Props> = ({ template }) => {
     </Document>
   );
 };
+
+const DPI = 72;
+const Inch = 25.4; // mm
+function mmToPix(mm: number): number {
+  return (mm * DPI) / Inch;
+}
+
+function mm(v: number): string {
+  return v + "mm";
+}

@@ -8,8 +8,6 @@ import Grid from "@material-ui/core/Grid";
 const styles: Record<string, CSSProperties> = {
   page: {
     background: "white",
-    margin: "2rem",
-    width: "210mm",
     boxShadow: "0px 0px 1rem 0px rgba(0,0,0,0.15)",
     outline: "none"
   }
@@ -18,7 +16,7 @@ const styles: Record<string, CSSProperties> = {
 interface Props<T> {
   template: Template;
   activeItem?: Item<T>;
-  onChangeItemValue: (id: ItemID, value: T) => void;
+  onChangeItemValue: (item: Item<T>, value: T) => void;
   onClickItem: (item: Item<T>) => void;
 }
 
@@ -28,15 +26,17 @@ export const Web: React.SFC<Props<any>> = ({
   onChangeItemValue,
   onClickItem
 }) => {
+  const { page } = template;
   return (
     <Grid
       item
       style={{
         ...styles.page,
-        paddingLeft: template.page.margin.left + "mm",
-        paddingTop: template.page.margin.top + "mm",
-        paddingRight: template.page.margin.right + "mm",
-        paddingBottom: template.page.margin.bottom + "mm"
+        width: dimension(page.size.width),
+        paddingLeft: dimension(page.margin.left),
+        paddingTop: dimension(page.margin.top),
+        paddingRight: dimension(page.margin.right),
+        paddingBottom: dimension(page.margin.bottom)
       }}
     >
       <React.Fragment>
@@ -49,7 +49,7 @@ export const Web: React.SFC<Props<any>> = ({
             <component.Web
               key={item.id}
               value={item.value}
-              onChange={v => onChangeItemValue(item.id, v)}
+              onChange={v => onChangeItemValue(item, v)}
               onClick={() => onClickItem(item)}
             />
           );
@@ -58,3 +58,7 @@ export const Web: React.SFC<Props<any>> = ({
     </Grid>
   );
 };
+
+function dimension(value: number): string {
+  return value + "mm";
+}

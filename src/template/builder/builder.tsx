@@ -12,13 +12,6 @@ import { Web } from "../../renderer/web";
 import { Settings } from "./settings";
 
 const styles: Record<string, CSSProperties> = {
-  page: {
-    background: "white",
-    margin: "2rem",
-    width: "210mm",
-    boxShadow: "0px 0px 1rem 0px rgba(0,0,0,0.15)",
-    outline: "none"
-  },
   btnAddItem: {
     position: "fixed",
     bottom: "2rem",
@@ -28,7 +21,7 @@ const styles: Record<string, CSSProperties> = {
 
 interface Props {
   template: Template;
-  setTemplateItemValue: (id: string, value: string) => void;
+  setTemplateItemValue: (item: Item<any>, value: any) => void;
   addItem: (component: Component<any>, after?: Item<any>) => Item<any>;
   removeItem: (item: Item<any>) => void;
 }
@@ -59,7 +52,7 @@ export const Builder: React.SFC<Props> = ({
 
   return (
     <Grid container>
-      <Settings item={activeItem} />
+      <Settings template={template} activeItem={activeItem} />
       <Grid
         container
         justify="center"
